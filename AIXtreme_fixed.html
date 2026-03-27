@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIXtreme — AI-Powered Solutions. Engineered for the Extreme.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
+#CUR{position:fixed;width:10px;height:10px;background:#fff;border-radius:50%;pointer-events:none;z-index:9999;top:-20px;left:-20px;transform:translate(-50%,-50%);mix-blend-mode:difference}
+#CUR2{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.35);border-radius:50%;pointer-events:none;z-index:9998;top:-20px;left:-20px;transform:translate(-50%,-50%);transition:top .1s ease,left .1s ease}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:18px 52px;background:rgba(0,0,0,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:800;letter-spacing:-.03em;color:#fff;text-decoration:none}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{color:#777;text-decoration:none;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;transition:color .3s;cursor:pointer}
+.nav-links a:hover{color:#fff}
+.nav-btn{padding:9px 22px;border:1px solid #fff;color:#fff;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;transition:background .3s,color .3s;background:transparent;cursor:pointer}
+.nav-btn:hover{background:#fff;color:#000}
+.sound-btn{position:fixed;bottom:28px;right:28px;z-index:600;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .3s}
+.sound-btn:hover{border-color:#fff}
+.sound-btn svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* HERO */
+#hero{position:relative;height:100vh;overflow:hidden}
+#heroCanvas{position:absolute;top:0;left:0;display:block}
+#shapeCanvas{position:absolute;top:0;right:0;width:52%;height:100%;display:block;z-index:4;pointer-events:none}
+.hero-c{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;justify-content:center;padding:0 52px;padding-top:120px;max-width:52%}
+.ey{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:#555;margin-bottom:20px;opacity:0;animation:up .8s .3s forwards}
+.h1{font-size:clamp(2.2rem,3.6vw,5rem);font-weight:800;line-height:1.02;letter-spacing:-.04em;max-width:700px;opacity:0;animation:up .9s .5s forwards}
+.h1 span{background:linear-gradient(110deg,#fff 40%,#444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{margin-top:24px;font-family:'Space Mono',monospace;font-size:.78rem;color:#777;max-width:420px;line-height:1.8;letter-spacing:.03em;opacity:0;animation:up .9s .7s forwards}
+.hb{display:flex;gap:14px;margin-top:40px;opacity:0;animation:up .9s .9s forwards}
+.bW{padding:12px 34px;background:#fff;color:#000;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;transition:transform .3s,box-shadow .3s;border:none;cursor:pointer}
+.bW:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(255,255,255,.14)}
+.bO{padding:12px 34px;border:1px solid rgba(255,255,255,.3);color:#fff;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;transition:border-color .3s;background:transparent;cursor:pointer}
+.bO:hover{border-color:#fff}
+.sc-hint{position:absolute;bottom:32px;left:52px;z-index:10;display:flex;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:.62rem;color:#444;letter-spacing:.18em;text-transform:uppercase;opacity:0;animation:fi 1s 1.4s forwards}
+.sl2{width:36px;height:1px;background:#333;overflow:hidden;position:relative}
+.sl2::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:#fff;animation:ss 2.2s 2s infinite}
+@keyframes ss{0%{left:-100%}100%{left:100%}}
+.tw{overflow:hidden;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:12px 0;background:rgba(255,255,255,.02);position:relative;z-index:1}
+.ti{display:flex;white-space:nowrap;animation:tk 22s linear infinite;font-family:'Space Mono',monospace;font-size:.64rem;color:#444;letter-spacing:.16em}
+.ti span{margin:0 40px}
+.ti .d{color:#fff}
+@keyframes tk{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+section{position:relative;z-index:1}
+.sp{padding:120px 52px}
+.lbl{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:#444;margin-bottom:14px}
+.ttl{font-size:clamp(2rem,4.5vw,4.8rem);font-weight:800;letter-spacing:-.04em;line-height:.95;margin-bottom:58px}
+#services{background:#000}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);background:rgba(255,255,255,.06);gap:1px}
+.sc2{background:#000;overflow:hidden;position:relative;transition:background .35s;cursor:default}
+.sc2:hover{background:#0d0d0d}
+.sc2 canvas{width:100%;display:block}
+.sb{padding:4px 34px 36px}
+.sn2{font-family:'Space Mono',monospace;font-size:.68rem;color:#444;letter-spacing:.2em;margin-bottom:16px;margin-top:22px}
+.st{font-size:1.55rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;line-height:1.2}
+.sd{font-family:'Space Mono',monospace;font-size:.86rem;color:#666;line-height:1.85;letter-spacing:.02em}
+.sc2::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.sc2:hover::after{transform:scaleX(1)}
+#stats{background:#fff;color:#000}
+.sr{display:flex;border-top:1px solid #e0e0e0}
+.si{flex:1;padding:64px 42px;border-right:1px solid #e0e0e0}
+.si:last-child{border-right:none}
+.snum{font-size:clamp(3rem,6vw,6.5rem);font-weight:800;letter-spacing:-.06em;line-height:1}
+.slb{font-family:'Space Mono',monospace;font-size:.64rem;color:#888;letter-spacing:.14em;text-transform:uppercase;margin-top:10px}
+#mid3d{position:relative;overflow:hidden;background:#000;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}
+#midCanvas{width:100%;display:block}
+.mt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:10;pointer-events:none;padding:0 40px}
+.mt h3{font-size:clamp(1.8rem,4vw,4.2rem);font-weight:800;letter-spacing:-.04em}
+.mt p{font-family:'Space Mono',monospace;font-size:.74rem;color:#777;margin-top:14px;max-width:440px;line-height:1.8}
+#process{background:#060606}
+.pl{border-top:1px solid rgba(255,255,255,.08)}
+.pi{display:grid;grid-template-columns:68px 1fr 1.8fr;gap:34px;padding:40px 0;border-bottom:1px solid rgba(255,255,255,.07);position:relative;transition:background .35s;cursor:default}
+.pi:hover{background:rgba(255,255,255,.02)}
+.pb{position:absolute;left:0;top:0;bottom:0;width:2px;background:#fff;transform:scaleY(0);transform-origin:top;transition:transform .55s}
+.pi:hover .pb{transform:scaleY(1)}
+.pn{font-family:'Space Mono',monospace;font-size:.6rem;color:#333;letter-spacing:.2em;padding-top:4px}
+.pt2{font-size:1.55rem;font-weight:700;letter-spacing:-.03em}
+.pd{font-family:'Space Mono',monospace;font-size:.72rem;color:#666;line-height:1.8;padding-top:4px}
+#cta{background:#fff;color:#000;text-align:center;padding:120px 52px}
+#cta .lbl{color:#bbb}
+#cta .ttl{color:#000;margin-bottom:16px}
+#cta p{font-family:'Space Mono',monospace;font-size:.76rem;color:#666;max-width:440px;margin:0 auto 44px;line-height:1.8}
+.bBlk{display:inline-block;padding:15px 48px;background:#000;color:#fff;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:transform .3s,box-shadow .3s;border:none;cursor:pointer}
+.bBlk:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.15)}
+/* CONTACT — centered */
+#contact-section{background:#000;padding:80px 52px;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:1;text-align:center}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.07);margin:40px auto 0;max-width:900px}
+.contact-item{background:#000;padding:48px 52px;transition:background .3s;display:flex;flex-direction:column;align-items:center;text-align:center}
+.contact-item:hover{background:#0d0d0d}
+.contact-icon{width:36px;height:36px;margin-bottom:20px}
+.contact-label{font-family:'Space Mono',monospace;font-size:.6rem;color:#444;letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px}
+.contact-value{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;line-height:1.4}
+.contact-value a{color:#fff;text-decoration:none;transition:color .3s}
+.contact-value a:hover{color:#ccc}
+footer{background:#000;border-top:1px solid rgba(255,255,255,.07);padding:40px 52px;display:flex;align-items:center;justify-content:space-between;z-index:1;position:relative}
+.fl{font-size:1.1rem;font-weight:800;letter-spacing:-.03em}
+.ft{font-family:'Space Mono',monospace;font-size:.6rem;color:#333;letter-spacing:.13em;text-transform:uppercase;margin-top:5px}
+.fli{display:flex;gap:28px;list-style:none}
+.fli a{font-family:'Space Mono',monospace;font-size:.62rem;color:#333;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .3s;cursor:pointer}
+.fli a:hover{color:#fff}
+.fc{font-family:'Space Mono',monospace;font-size:.6rem;color:#333;letter-spacing:.1em}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#0d0d0d;border:1px solid rgba(255,255,255,.12);width:100%;max-width:560px;position:relative;animation:modalIn .35s ease forwards}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{padding:32px 36px 24px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;justify-content:space-between}
+.modal-header h2{font-size:1.5rem;font-weight:800;letter-spacing:-.03em}
+.modal-header p{font-family:'Space Mono',monospace;font-size:.63rem;color:#555;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.modal-close{width:32px;height:32px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s;flex-shrink:0;margin-left:16px}
+.modal-close:hover{background:rgba(255,255,255,.1)}
+.modal-body{padding:32px 36px}
+.form-row{margin-bottom:20px}
+.form-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#555;margin-bottom:8px;display:block}
+.form-input{width:100%;background:#000;border:1px solid rgba(255,255,255,.12);color:#fff;padding:12px 16px;font-family:'Space Mono',monospace;font-size:.78rem;outline:none;transition:border-color .3s;letter-spacing:.03em}
+.form-input:focus{border-color:rgba(255,255,255,.4)}
+.form-input::placeholder{color:#333}
+textarea.form-input{resize:vertical;min-height:100px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-submit{width:100%;padding:14px;background:#fff;color:#000;border:none;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .3s,transform .2s;margin-top:4px}
+.form-submit:hover{background:#e0e0e0;transform:translateY(-2px)}
+.form-submit:disabled{background:#444;color:#888;cursor:not-allowed;transform:none}
+.form-note{font-family:'Space Mono',monospace;font-size:.58rem;color:#444;text-align:center;margin-top:14px;letter-spacing:.05em;line-height:1.6}
+.form-success{text-align:center;padding:20px 0;display:none}
+.form-success .check{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.4rem}
+.form-success h3{font-size:1.3rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+.form-success p{font-family:'Space Mono',monospace;font-size:.7rem;color:#666;line-height:1.8}
+@keyframes up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s}
+.rv.vis{opacity:1;transform:translateY(0)}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:8000;opacity:.3}
+@media(max-width:900px){
+  nav{padding:14px 18px}
+  .nav-links{display:none}
+  .hero-c{padding:90px 18px 0;max-width:100%}
+  #shapeCanvas{display:none}
+  .sc-hint{left:18px}
+  .h1{font-size:clamp(2rem,7vw,3.8rem);line-height:1.05}
+  .sp{padding:80px 18px}
+  .sg{grid-template-columns:1fr}
+  .sr{flex-direction:column}
+  .si{border-right:none;border-bottom:1px solid #e0e0e0}
+  .pi{grid-template-columns:48px 1fr;gap:12px}
+  .pd{display:none}
+  .contact-grid{grid-template-columns:1fr;max-width:100%}
+  .contact-item{padding:36px 28px}
+  footer{flex-direction:column;gap:24px;padding:30px 18px;text-align:center}
+  .fli{flex-wrap:wrap;justify-content:center}
+  #contact-section{padding:60px 18px}
+  .modal{max-width:100%}
+  .modal-header{padding:22px 20px 16px}
+  .modal-body{padding:20px}
+  .form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="CUR"></div>
+<div id="CUR2"></div>
+<button class="sound-btn" id="soundBtn" title="Toggle ambient sound">
+  <svg id="soundIcon" viewBox="0 0 24 24">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+  </svg>
+</button>
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div><h2>Let's Connect</h2><p>// AIXtreme · AIXtreme.in@gmail.com</p></div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="contactForm">
+        <div class="form-grid">
+          <div class="form-row"><label class="form-label">Your Name</label><input class="form-input" id="fname" type="text" placeholder="John Doe"></div>
+          <div class="form-row"><label class="form-label">Email</label><input class="form-input" id="femail" type="email" placeholder="you@company.com"></div>
+        </div>
+        <div class="form-row"><label class="form-label">Company / Organization</label><input class="form-input" id="fcompany" type="text" placeholder="Your company name"></div>
+        <div class="form-row"><label class="form-label">What are you looking for?</label><textarea class="form-input" id="fmessage" placeholder="Tell us about your AI needs..."></textarea></div>
+        <button class="form-submit" id="formSubmit" onclick="submitForm()">Send Message →</button>
+        <p class="form-note">Your message will be sent directly to AIXtreme.in@gmail.com · We respond within 24 hours</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="check">✓</div>
+        <h3>Message Sent!</h3>
+        <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<nav>
+  <a href="#" class="logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <circle cx="4" cy="7" r="2" stroke="#fff" stroke-width="1.1"/>
+      <circle cx="4" cy="16" r="2" stroke="#fff" stroke-width="1.1"/>
+      <circle cx="4" cy="25" r="2" stroke="#fff" stroke-width="1.1"/>
+      <line x1="6" y1="7" x2="13" y2="7" stroke="#fff" stroke-width="1.1"/>
+      <line x1="6" y1="16" x2="13" y2="13" stroke="#fff" stroke-width="1.1"/>
+      <line x1="6" y1="25" x2="13" y2="25" stroke="#fff" stroke-width="1.1"/>
+      <line x1="13" y1="7" x2="13" y2="25" stroke="#fff" stroke-width="1.1"/>
+      <line x1="13" y1="13" x2="19" y2="13" stroke="#fff" stroke-width="1.1"/>
+      <line x1="19" y1="7" x2="19" y2="25" stroke="#fff" stroke-width="1.1"/>
+      <line x1="19" y1="7" x2="28" y2="7" stroke="#fff" stroke-width="1.1"/>
+      <line x1="19" y1="16" x2="28" y2="16" stroke="#fff" stroke-width="1.1"/>
+      <line x1="19" y1="25" x2="28" y2="25" stroke="#fff" stroke-width="1.1"/>
+      <circle cx="28" cy="7" r="1.8" fill="#fff"/>
+      <circle cx="28" cy="16" r="1.8" fill="#fff"/>
+      <circle cx="28" cy="25" r="1.8" fill="#fff"/>
+    </svg>
+    AIXtreme
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Solutions</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#stats">Impact</a></li>
+    <li><a href="#contact-section">Contact</a></li>
+  </ul>
+  <button class="nav-btn" onclick="openModal()">Get Started</button>
+</nav>
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <canvas id="shapeCanvas"></canvas>
+  <div class="hero-c">
+    <p class="ey">// Next-Gen AI Infrastructure</p>
+    <h1 class="h1"><span>AI-Powered</span><br>Solutions.<br>Engineered<br>for the Extreme.</h1>
+    <p class="hs">We architect and deploy transformative AI — autonomous agents, deep predictive engines, and enterprise-scale intelligence systems.</p>
+    <div class="hb">
+      <button class="bW" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Solutions</button>
+      <button class="bO" onclick="openModal()">Talk to Us</button>
+    </div>
+  </div>
+  <div class="sc-hint"><div class="sl2"></div>Scroll to explore</div>
+</section>
+<div class="tw">
+  <div class="ti">
+    <span>AI Agents <span class="d">✦</span></span><span>LLM Engineering <span class="d">✦</span></span><span>Predictive Modelling <span class="d">✦</span></span><span>Supply Chain AI <span class="d">✦</span></span><span>Computer Vision <span class="d">✦</span></span><span>RAG Systems <span class="d">✦</span></span><span>Process Automation <span class="d">✦</span></span><span>AIXtreme <span class="d">✦</span></span><span>AI Agents <span class="d">✦</span></span><span>LLM Engineering <span class="d">✦</span></span><span>Predictive Modelling <span class="d">✦</span></span><span>Supply Chain AI <span class="d">✦</span></span><span>Computer Vision <span class="d">✦</span></span><span>RAG Systems <span class="d">✦</span></span><span>Process Automation <span class="d">✦</span></span><span>AIXtreme <span class="d">✦</span></span>
+  </div>
+</div>
+<section id="services" class="sp">
+  <p class="lbl rv">// What we build</p>
+  <h2 class="ttl rv">Our AI Solutions</h2>
+  <div class="sg">
+    <div class="sc2 rv"><canvas id="c1" height="160"></canvas><div class="sb"><div class="sn2">01</div><h3 class="st">Autonomous AI Agents</h3><p class="sd">Multi-agent orchestration that reasons, plans and acts continuously — tool-using pipelines that never sleep.</p></div></div>
+    <div class="sc2 rv" style="transition-delay:.08s"><canvas id="c2" height="160"></canvas><div class="sb"><div class="sn2">02</div><h3 class="st">LLM & Predictive Models</h3><p class="sd">Fine-tuned LLMs and deep learning for forecasting, anomaly detection, and domain classification at scale.</p></div></div>
+    <div class="sc2 rv" style="transition-delay:.16s"><canvas id="c3" height="160"></canvas><div class="sb"><div class="sn2">03</div><h3 class="st">Supply Chain AI</h3><p class="sd">Demand sensing, inventory optimization, disruption prediction — intelligent self-healing networks.</p></div></div>
+    <div class="sc2 rv" style="transition-delay:.24s"><canvas id="c4" height="160"></canvas><div class="sb"><div class="sn2">04</div><h3 class="st">Computer Vision AI</h3><p class="sd">Real-time object detection, defect inspection, and video intelligence for industrial environments.</p></div></div>
+    <div class="sc2 rv" style="transition-delay:.32s"><canvas id="c5" height="160"></canvas><div class="sb"><div class="sn2">05</div><h3 class="st">RAG & Knowledge Systems</h3><p class="sd">Retrieval-Augmented Generation pipelines giving your AI accurate real-time enterprise knowledge.</p></div></div>
+    <div class="sc2 rv" style="transition-delay:.40s"><canvas id="c6" height="160"></canvas><div class="sb"><div class="sn2">06</div><h3 class="st">AI Process Automation</h3><p class="sd">AI + RPA + APIs. Eliminate repetitive tasks and scale operations without adding headcount.</p></div></div>
+  </div>
+</section>
+<section id="stats">
+  <div class="sr rv">
+    <div class="si"><div class="snum" data-t="10" data-s="+">0</div><div class="slb">Projects Delivered</div></div>
+    <div class="si"><div class="snum" data-t="99" data-s="%">0</div><div class="slb">Uptime SLA</div></div>
+    <div class="si"><div class="snum" data-t="5" data-s="+">0</div><div class="slb">Industries Served</div></div>
+    <div class="si"><div class="snum" data-t="3" data-s="x">0</div><div class="slb">Avg ROI Multiplier</div></div>
+  </div>
+</section>
+<div id="mid3d">
+  <canvas id="midCanvas" height="480"></canvas>
+  <div class="mt">
+    <h3 class="rv">Intelligence at Scale</h3>
+    <p class="rv">Every model we build is engineered for extreme performance, reliability, and impact.</p>
+  </div>
+</div>
+<section id="process" class="sp">
+  <p class="lbl rv">// How we work</p>
+  <h2 class="ttl rv">From Idea<br>to Deployment</h2>
+  <div class="pl rv">
+    <div class="pi"><div class="pb"></div><div class="pn">01</div><div class="pt2">Discover & Define</div><div class="pd">Map business objectives to AI opportunities — highest-impact use cases, data readiness, and success metrics before writing a single line of code.</div></div>
+    <div class="pi"><div class="pb"></div><div class="pn">02</div><div class="pt2">Prototype & Validate</div><div class="pd">Rapid prototyping on real data. Test hypotheses fast, iterate on model architecture, and validate performance in weeks, not months.</div></div>
+    <div class="pi"><div class="pb"></div><div class="pn">03</div><div class="pt2">Build & Integrate</div><div class="pd">Production-grade systems integrated into your tech stack with robust APIs, monitoring dashboards, and failsafe mechanisms.</div></div>
+    <div class="pi"><div class="pb"></div><div class="pn">04</div><div class="pt2">Deploy & Evolve</div><div class="pd">Continuous retraining pipelines, drift detection, and performance monitoring. Your long-term AI partner, not a one-off vendor.</div></div>
+  </div>
+</section>
+<section id="cta">
+  <p class="lbl rv">// Let's build together</p>
+  <h2 class="ttl rv">Ready to Go<br>Extreme with AI?</h2>
+  <p class="rv">Whether starting from zero or scaling an existing system, we engineer solutions that perform at the bleeding edge of what's possible.</p>
+  <button class="bBlk rv" onclick="openModal()">Start a Conversation</button>
+</section>
+<section id="contact-section">
+  <p class="lbl rv">// Reach us</p>
+  <h2 class="ttl rv" style="margin-bottom:0">Get In Touch</h2>
+  <div class="contact-grid rv">
+    <div class="contact-item">
+      <svg class="contact-icon" viewBox="0 0 36 36" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="30" height="20" rx="2"/><polyline points="3,8 18,21 33,8"/></svg>
+      <div class="contact-label">Email</div>
+      <div class="contact-value"><a href="mailto:AIXtreme.in@gmail.com">AIXtreme.in@gmail.com</a></div>
+    </div>
+    <div class="contact-item">
+      <svg class="contact-icon" viewBox="0 0 36 36" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h7l3 7-4 2.5a18 18 0 0 0 6.5 6.5L21 16l7 3v7a2 2 0 0 1-2 2C10.5 28 3 20.6 3 6a2 2 0 0 1 3-1.73z"/></svg>
+      <div class="contact-label">Phone</div>
+      <div class="contact-value"><a href="tel:+919717461302">+91-9717461302</a></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div><div class="fl">AIXtreme</div><div class="ft">AI-Powered. Engineered for the Extreme.</div></div>
+  <ul class="fli">
+    <li><a href="#services">Solutions</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#stats">Impact</a></li>
+    <li><a href="#contact-section">Contact</a></li>
+  </ul>
+  <div class="fc">© 2026 AIXtreme. All rights reserved.</div>
+</footer>
+<div id="yt-wrap" style="position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;z-index:-1"><div id="yt-player"></div></div>
+<script>
+const TAU=Math.PI*2;
+const rnd=(a,b)=>a+(b-a)*Math.random();
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* CURSOR */
+const ce=document.getElementById('CUR'),ce2=document.getElementById('CUR2');
+document.addEventListener('mousemove',e=>{ce.style.left=e.clientX+'px';ce.style.top=e.clientY+'px';ce2.style.left=e.clientX+'px';ce2.style.top=e.clientY+'px';});
+
+/* 3D MATH */
+function rotY(v,a){return{x:v.x*Math.cos(a)-v.z*Math.sin(a),y:v.y,z:v.x*Math.sin(a)+v.z*Math.cos(a)}}
+function rotX(v,a){return{x:v.x,y:v.y*Math.cos(a)-v.z*Math.sin(a),z:v.y*Math.sin(a)+v.z*Math.cos(a)}}
+function proj(v,fov,cx,cy){const zz=fov/(fov+v.z+200);return{x:cx+v.x*zz,y:cy+v.y*zz,zz}}
+function icoVerts(R){const p=(1+Math.sqrt(5))/2,n=Math.sqrt(1+p*p);return[[-1,p,0],[1,p,0],[-1,-p,0],[1,-p,0],[0,-1,p],[0,1,p],[0,-1,-p],[0,1,-p],[p,0,-1],[p,0,1],[-p,0,-1],[-p,0,1]].map(([x,y,z])=>({x:x/n*R,y:y/n*R,z:z/n*R}))}
+const ICO_E=[[0,1],[0,5],[0,7],[0,10],[0,11],[1,5],[1,7],[1,8],[1,9],[2,3],[2,4],[2,10],[2,11],[3,4],[3,6],[3,8],[3,9],[4,5],[4,9],[4,11],[5,9],[5,11],[6,7],[6,8],[6,10],[7,8],[7,10],[8,9],[10,11]];
+function octaVerts(R){return[{x:R,y:0,z:0},{x:-R,y:0,z:0},{x:0,y:R,z:0},{x:0,y:-R,z:0},{x:0,y:0,z:R},{x:0,y:0,z:-R}]}
+const OCT_E=[[0,2],[0,3],[0,4],[0,5],[1,2],[1,3],[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]];
+
+/* =============================================
+   BIG HERO 3D SHAPE — DNA double helix + sphere lattice
+   ============================================= */
+(function(){
+  const cv=document.getElementById('shapeCanvas');
+  const ctx=cv.getContext('2d');
+  let W,H,mX=0,mY=0,t=0;
+
+  function rsz(){
+    W=cv.width=cv.offsetWidth;
+    H=cv.height=window.innerHeight;
+  }
+  rsz();
+  window.addEventListener('resize',rsz);
+  window.addEventListener('mousemove',e=>{
+    mX=(e.clientX/window.innerWidth-.5)*2;
+    mY=(e.clientY/window.innerHeight-.5)*2;
+  });
+
+  // Build sphere lattice points
+  function spherePoints(R,rows,cols){
+    const pts=[];
+    for(let i=0;i<=rows;i++){
+      const phi=Math.PI*i/rows;
+      for(let j=0;j<cols;j++){
+        const theta=TAU*j/cols;
+        pts.push({
+          x:R*Math.sin(phi)*Math.cos(theta),
+          y:R*Math.cos(phi),
+          z:R*Math.sin(phi)*Math.sin(theta),
+          row:i,col:j
+        });
+      }
+    }
+    return pts;
+  }
+
+  // Build torus points
+  function torusPoints(R,r,rows,cols){
+    const pts=[];
+    for(let i=0;i<rows;i++){
+      for(let j=0;j<cols;j++){
+        const u=TAU*i/rows;
+        const v=TAU*j/cols;
+        pts.push({
+          x:(R+r*Math.cos(v))*Math.cos(u),
+          y:r*Math.sin(v),
+          z:(R+r*Math.cos(v))*Math.sin(u),
+          u:i,v:j,rows,cols
+        });
+      }
+    }
+    return pts;
+  }
+
+  const SPH=spherePoints(200,12,20);
+  const TOR=torusPoints(160,55,36,18);
+  let axS=0,ayS=0,axT=0,ayT=0;
+
+  function frame(){
+    requestAnimationFrame(frame);
+    t+=.008;
+    W=cv.width=cv.offsetWidth;
+    H=cv.height=window.innerHeight;
+    ctx.clearRect(0,0,W,H);
+
+    const cx=W*0.46, cy=H*0.5;
+    // smooth mouse tracking
+    axS+=(mY*0.04-axS)*0.04;
+    ayS+=(mX*0.04-ayS)*0.04;
+    axT+=(mY*0.03-axT)*0.03;
+    ayT+=(mX*0.03-ayT)*0.03;
+
+    // --- TORUS (outer, slow rotate) ---
+    const tAngleX=t*0.22+axT;
+    const tAngleY=t*0.31+ayT;
+    const tPts=TOR.map(p=>{
+      let v={x:p.x,y:p.y,z:p.z};
+      v=rotX(v,tAngleX);
+      v=rotY(v,tAngleY);
+      return proj(v,520,cx,cy);
+    });
+    // draw torus edges
+    for(let i=0;i<36;i++){
+      for(let j=0;j<18;j++){
+        const a=i*18+j;
+        const b=i*18+(j+1)%18;
+        const c=((i+1)%36)*18+j;
+        const pa=tPts[a],pb=tPts[b],pc=tPts[c];
+        const depth=(TOR[a].z+200)/400;
+        const alpha=clamp(depth*0.55,0.04,0.55);
+        ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);
+        ctx.strokeStyle=`rgba(255,255,255,${alpha*0.7})`;ctx.lineWidth=0.6;ctx.stroke();
+        ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pc.x,pc.y);
+        ctx.strokeStyle=`rgba(255,255,255,${alpha*0.5})`;ctx.lineWidth=0.6;ctx.stroke();
+      }
+    }
+    // torus dots
+    tPts.forEach((p,i)=>{
+      const depth=(TOR[i].z+200)/400;
+      ctx.beginPath();ctx.arc(p.x,p.y,clamp(1.2*p.zz,0.3,2.2),0,TAU);
+      ctx.fillStyle=`rgba(255,255,255,${clamp(depth*0.8,0.05,0.85)})`;
+      ctx.fill();
+    });
+
+    // --- INNER SPHERE (fast rotate, offset) ---
+    const sAngleX=t*0.45+axS;
+    const sAngleY=t*0.6+ayS;
+    const sPts=SPH.map(p=>{
+      let v={x:p.x,y:p.y,z:p.z};
+      v=rotX(v,sAngleX);
+      v=rotY(v,sAngleY);
+      return proj(v,520,cx,cy);
+    });
+    const rows=12,cols=20;
+    for(let i=0;i<=rows;i++){
+      for(let j=0;j<cols;j++){
+        const a=i*cols+j;
+        if(a>=SPH.length)continue;
+        const bH=i*cols+(j+1)%cols;
+        const bV=(i+1)*cols+j;
+        const pa=sPts[a];
+        if(bH<sPts.length){
+          const pb=sPts[bH];
+          const alpha=clamp((SPH[a].z+200)/500*0.6,0.04,0.6);
+          ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);
+          ctx.strokeStyle=`rgba(255,255,255,${alpha})`;ctx.lineWidth=0.8;ctx.stroke();
+        }
+        if(bV<sPts.length){
+          const pb=sPts[bV];
+          const alpha=clamp((SPH[a].z+200)/500*0.6,0.04,0.6);
+          ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);
+          ctx.strokeStyle=`rgba(255,255,255,${alpha})`;ctx.lineWidth=0.8;ctx.stroke();
+        }
+      }
+    }
+    sPts.forEach((p,i)=>{
+      const depth=(SPH[i].z+200)/400;
+      const pulse=0.5+0.5*Math.sin(t*2+i*0.3);
+      ctx.beginPath();ctx.arc(p.x,p.y,clamp(2.2*p.zz,0.4,3.5),0,TAU);
+      ctx.fillStyle=`rgba(255,255,255,${clamp(depth*pulse*1.2,0.05,1)})`;
+      ctx.fill();
+    });
+
+    // bright core glow at center
+    const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,80);
+    grad.addColorStop(0,'rgba(255,255,255,0.06)');
+    grad.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.beginPath();ctx.arc(cx,cy,80,0,TAU);
+    ctx.fillStyle=grad;ctx.fill();
+
+    // orbiting particles around shape
+    for(let i=0;i<6;i++){
+      const angle=t*0.8+i*(TAU/6);
+      const orR=230+Math.sin(t+i)*20;
+      const ox=cx+orR*Math.cos(angle);
+      const oy=cy+orR*Math.sin(angle)*0.4;
+      ctx.beginPath();ctx.arc(ox,oy,2.5,0,TAU);
+      ctx.fillStyle=`rgba(255,255,255,${0.5+0.4*Math.sin(t*2+i)})`;
+      ctx.fill();
+      // trail
+      for(let tr=1;tr<=8;tr++){
+        const ta=angle-tr*0.06;
+        const tx2=cx+orR*Math.cos(ta);
+        const ty2=cy+orR*Math.sin(ta)*0.4;
+        ctx.beginPath();ctx.arc(tx2,ty2,1.5*(1-tr/8),0,TAU);
+        ctx.fillStyle=`rgba(255,255,255,${(0.3*(1-tr/8))})`;
+        ctx.fill();
+      }
+    }
+  }
+  frame();
+})();
+
+/* =============================================
+   HERO BG CANVAS — particles + wireframe shapes
+   ============================================= */
+(function(){
+  const cv=document.getElementById('heroCanvas'),ctx=cv.getContext('2d');
+  let W,H;
+  function rsz(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  rsz();window.addEventListener('resize',rsz);
+  const N=80;
+  const pts=Array.from({length:N},()=>({x:rnd(-1,1),y:rnd(-1,1),z:rnd(-150,150),vx:rnd(-.15,.15),vy:rnd(-.12,.12),vz:rnd(-.08,.08),r:rnd(.5,2)}));
+  const shapes=[
+    {verts:icoVerts(60),edges:ICO_E,ax:0,ay:0,rx:.005,ry:.008,ox:-.3,oy:-.15,op:.06},
+    {verts:octaVerts(45),edges:OCT_E,ax:0,ay:0,rx:.007,ry:.005,ox:.1,oy:.25,op:.08},
+  ];
+  let mX=0,mY=0,gAX=0,gAY=0,t=0;
+  window.addEventListener('mousemove',e=>{mX=(e.clientX/window.innerWidth-.5)*.4;mY=(e.clientY/window.innerHeight-.5)*.3;});
+  function frame(){
+    requestAnimationFrame(frame);t+=.01;
+    W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;
+    ctx.clearRect(0,0,W,H);
+    gAX+=(mY*.05-gAX)*.04;gAY+=(mX*.05-gAY)*.04;
+    pts.forEach(p=>{
+      p.x+=p.vx/W*2;p.y+=p.vy/H*2;p.z+=p.vz;
+      if(Math.abs(p.x)>1)p.vx*=-1;if(Math.abs(p.y)>1)p.vy*=-1;if(Math.abs(p.z)>150)p.vz*=-1;
+      const pp=proj({x:p.x*W*.5,y:p.y*H*.5,z:p.z},500,W/2,H/2);
+      ctx.beginPath();ctx.arc(pp.x,pp.y,p.r*pp.zz,0,TAU);
+      ctx.fillStyle=`rgba(255,255,255,${clamp(.08+.6*(p.z/150+1)/2,.04,.8)})`;ctx.fill();
+    });
+    for(let a=0;a<pts.length;a++)for(let b=a+1;b<pts.length;b++){
+      const dx=(pts[a].x-pts[b].x)*W*.5,dy=(pts[a].y-pts[b].y)*H*.5,dz=pts[a].z-pts[b].z;
+      const d=Math.sqrt(dx*dx+dy*dy+dz*dz);
+      if(d<80){
+        const pa=proj({x:pts[a].x*W*.5,y:pts[a].y*H*.5,z:pts[a].z},500,W/2,H/2);
+        const pb=proj({x:pts[b].x*W*.5,y:pts[b].y*H*.5,z:pts[b].z},500,W/2,H/2);
+        ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);
+        ctx.strokeStyle=`rgba(255,255,255,${.08*(1-d/80)})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+    shapes.forEach(s=>{
+      s.ax+=s.rx+gAX*.3;s.ay+=s.ry+gAY*.3;
+      const rv=s.verts.map(v=>{let r=rotY(v,s.ay);return rotX(r,s.ax);});
+      const cx2=W/2+s.ox*W,cy2=H/2+s.oy*H;
+      s.edges.forEach(([a,b])=>{
+        const pa=proj({x:rv[a].x,y:rv[a].y,z:rv[a].z},500,cx2,cy2);
+        const pb=proj({x:rv[b].x,y:rv[b].y,z:rv[b].z},500,cx2,cy2);
+        ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);
+        ctx.strokeStyle=`rgba(255,255,255,${clamp(s.op*(rv[a].z+rv[b].z+200)/200,.01,.2)})`;
+        ctx.lineWidth=.9;ctx.stroke();
+      });
+    });
+  }
+  frame();
+})();
+
+/* SERVICE CARD ANIMATIONS */
+function initCard(id,type){
+  const cv=document.getElementById(id);if(!cv)return;
+  function rsz(){cv.width=cv.offsetWidth||cv.parentElement.offsetWidth||300;cv.height=160;}
+  rsz();window.addEventListener('resize',rsz);
+  const ctx=cv.getContext('2d');let t=0;
+  function frame(){
+    requestAnimationFrame(frame);t+=.016;
+    const W=cv.width,H=cv.height,cx=W/2,cy=H/2;
+    ctx.clearRect(0,0,W,H);
+    if(type==='agent'){
+      const base=[{x:cx,y:cy},{x:cx+44,y:cy-20},{x:cx-42,y:cy-12},{x:cx+26,y:cy+28},{x:cx-34,y:cy+24}];
+      const pos=base.map((n,i)=>i===0?{x:n.x,y:n.y}:{x:n.x+20*Math.cos(t*(.5+i*.1)+i),y:n.y+20*Math.sin(t*(.5+i*.1)+i)*.45});
+      pos.forEach((a,i)=>pos.forEach((b,j)=>{if(j<=i)return;const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<90){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(255,255,255,${.38*(1-d/90)})`;ctx.lineWidth=.8;ctx.stroke();}}));
+      pos.forEach((n,i)=>{ctx.beginPath();ctx.arc(n.x,n.y,i===0?5:3,0,TAU);ctx.fillStyle=i===0?'rgba(255,255,255,.9)':'rgba(255,255,255,.6)';ctx.fill();if(i===0){const pr=(t%2)/2*24;ctx.beginPath();ctx.arc(n.x,n.y,pr,0,TAU);ctx.strokeStyle=`rgba(255,255,255,${.38*(1-pr/24)})`;ctx.lineWidth=1;ctx.stroke();}});
+    }else if(type==='wave'){
+      for(let gx=-4;gx<=4;gx++)for(let gy=-2;gy<=2;gy++){const w=Math.sin(t*1.4+gx*.7+gy*.5)*.5+.5;const z=w*24-12,fov=160,zz=fov/(fov+z);ctx.beginPath();ctx.arc(cx+gx*18*zz,cy+gy*15*zz,clamp(2.5*zz,.3,4.5),0,TAU);ctx.fillStyle=`rgba(255,255,255,${.15+.7*w})`;ctx.fill();}
+    }else if(type==='hex'){
+      const rv=icoVerts(48).map(v=>{let r=rotY(v,t*.5);return rotX(r,t*.35);});
+      ICO_E.forEach(([a,b])=>{const pa=proj({x:rv[a].x,y:rv[a].y,z:rv[a].z},160,cx,cy);const pb=proj({x:rv[b].x,y:rv[b].y,z:rv[b].z},160,cx,cy);ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.strokeStyle=`rgba(255,255,255,${clamp(.08+.5*(rv[a].z+rv[b].z+96)/96,.04,.65)})`;ctx.lineWidth=.9;ctx.stroke();});
+      ctx.beginPath();ctx.arc(cx+60*Math.cos(t*.7),cy+60*Math.sin(t*.7)*.35,3.5,0,TAU);ctx.fillStyle='rgba(255,255,255,.8)';ctx.fill();
+    }else if(type==='eye'){
+      for(let i=0;i<4;i++){ctx.beginPath();ctx.ellipse(cx,cy,14+i*14,5+i*3,t*.26+i*.32,0,TAU);ctx.strokeStyle=`rgba(255,255,255,${.5-.1*i})`;ctx.lineWidth=1.1;ctx.stroke();}
+      const sl=Math.sin(t*1.1)*58;ctx.beginPath();ctx.moveTo(cx+sl,cy-10);ctx.lineTo(cx+sl,cy+10);ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.4;ctx.stroke();
+      ctx.beginPath();ctx.arc(cx,cy,5,0,TAU);ctx.fillStyle='rgba(255,255,255,.9)';ctx.fill();
+    }else if(type==='rag'){
+      const NR=30,H2=52;
+      for(let i=0;i<NR;i++){const a=i/NR*TAU*2+t*.65;const y=cy-H2+i/NR*H2*2;const x1=cx+Math.cos(a)*32,x2=cx-Math.cos(a)*32;const z1=Math.sin(a)*7;ctx.beginPath();ctx.arc(x1,y,Math.max(.4,1.8+z1/7),0,TAU);ctx.fillStyle=`rgba(255,255,255,${clamp(.25+.6*(z1/7+1)/2,.1,.9)})`;ctx.fill();ctx.beginPath();ctx.arc(x2,y,Math.max(.4,1.8-z1/7),0,TAU);ctx.fillStyle=`rgba(255,255,255,${clamp(.25+.6*(-z1/7+1)/2,.1,.9)})`;ctx.fill();if(i%3===0){ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=.7;ctx.stroke();}}
+    }else if(type==='auto'){
+      const rv=octaVerts(40).map(v=>{let r=rotY(v,t*.5);return rotX(r,t*.38);});
+      OCT_E.forEach(([a,b])=>{const pa=proj({x:rv[a].x,y:rv[a].y,z:rv[a].z},150,cx,cy);const pb=proj({x:rv[b].x,y:rv[b].y,z:rv[b].z},150,cx,cy);ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.strokeStyle='rgba(255,255,255,.58)';ctx.lineWidth=1;ctx.stroke();});
+      for(let i=0;i<3;i++){const a=t*.75+i*TAU/3;const sx=cx+52*Math.cos(a),sy=cy+52*Math.sin(a)*.38;ctx.beginPath();ctx.arc(sx,sy,3.5,0,TAU);ctx.fillStyle='rgba(255,255,255,.7)';ctx.fill();ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(sx,sy);ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=.7;ctx.stroke();}
+    }
+  }
+  frame();
+}
+window.addEventListener('load',()=>{setTimeout(()=>{['c1','c2','c3','c4','c5','c6'].forEach((id,i)=>{initCard(id,['agent','wave','hex','eye','rag','auto'][i]);});},80);});
+
+/* MID SECTION — Crystal lattice */
+(function(){
+  const cv=document.getElementById('midCanvas'),ctx=cv.getContext('2d');
+  function rsz(){cv.width=window.innerWidth;cv.height=480;}
+  rsz();window.addEventListener('resize',rsz);
+  const COLS=10,ROWS=5;let pts=[],edges=[];
+  function build(){
+    const W=cv.width,H=cv.height;pts=[];
+    for(let x=0;x<COLS;x++)for(let y=0;y<ROWS;y++){pts.push({bx:(x/(COLS-1)-.5)*W*.85,by:(y/(ROWS-1)-.5)*H*.7,bz:rnd(-60,60),ph:rnd(0,TAU),sp:rnd(.4,.9),r:rnd(1.8,4)});}
+    edges=[];
+    pts.forEach((a,i)=>pts.forEach((b,j)=>{if(j<=i)return;const d=Math.hypot(a.bx-b.bx,a.by-b.by,a.bz-b.bz);if(d<cv.width*.19)edges.push([i,j,d,cv.width*.19]);}));
+  }
+  setTimeout(build,50);window.addEventListener('resize',()=>setTimeout(build,50));
+  let mX=0,rY=0,t=0;
+  window.addEventListener('mousemove',e=>{mX=(e.clientX/window.innerWidth-.5)*2;});
+  function frame(){
+    requestAnimationFrame(frame);t+=.008;
+    const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);
+    rY+=(mX*.25-rY)*.03;
+    const cosR=Math.cos(rY),sinR=Math.sin(rY);
+    const pp=pts.map(p=>{const x=p.bx*cosR-p.bz*sinR,z=p.bx*sinR+p.bz*cosR;const y=p.by+Math.sin(t*p.sp+p.ph)*14;const fov=380,zz=fov/(fov+z+160);return{x:W/2+x*zz,y:H/2+y*zz,zz};});
+    edges.forEach(([i,j,d,md])=>{ctx.beginPath();ctx.moveTo(pp[i].x,pp[i].y);ctx.lineTo(pp[j].x,pp[j].y);ctx.strokeStyle=`rgba(255,255,255,${clamp(.03+.12*(1-d/md),.01,.18)})`;ctx.lineWidth=.6;ctx.stroke();});
+    pp.forEach((p,i)=>{const pulse=.5+.5*Math.sin(t*pts[i].sp+pts[i].ph);ctx.beginPath();ctx.arc(p.x,p.y,Math.max(.3,pts[i].r*p.zz),0,TAU);ctx.fillStyle=`rgba(255,255,255,${.1+.5*pulse})`;ctx.fill();});
+  }
+  frame();
+})();
+
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* COUNT-UP STATS */
+let countDone=false;
+new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting&&!countDone){
+    countDone=true;
+    document.querySelectorAll('.snum').forEach(el=>{const tg=+el.dataset.t,sf=el.dataset.s||'+';let n=0,step=Math.max(1,Math.ceil(tg/55));const tm=setInterval(()=>{n=Math.min(n+step,tg);el.textContent=n+sf;if(n>=tg)clearInterval(tm);},22);});
+  }
+},{threshold:.3}).observe(document.getElementById('stats'));
+
+/* YOUTUBE */
+let ytPlayer=null,musicOn=false;
+function onYouTubeIframeAPIReady(){ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'iaKIqHjLiWU',playerVars:{autoplay:0,loop:1,playlist:'iaKIqHjLiWU',controls:0,disablekb:1,fs:0,modestbranding:1,rel:0},events:{onReady:()=>{ytPlayer.setVolume(40);},onStateChange:(e)=>{if(e.data===YT.PlayerState.ENDED)ytPlayer.playVideo();}}});}
+(function(){const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);})();
+function toggleSound(){const icon=document.getElementById('soundIcon');if(!ytPlayer)return;musicOn=!musicOn;if(musicOn){ytPlayer.playVideo();icon.innerHTML='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke-linecap="round"/>';document.getElementById('soundBtn').style.borderColor='rgba(255,255,255,.6)';}else{ytPlayer.pauseVideo();icon.innerHTML='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>';document.getElementById('soundBtn').style.borderColor='rgba(255,255,255,.25)';}}
+document.getElementById('soundBtn').addEventListener('click',toggleSound);
+
+/* MODAL */
+function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('modalOverlay'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+function submitForm(){
+  const name=document.getElementById('fname').value.trim();
+  const email=document.getElementById('femail').value.trim();
+  const company=document.getElementById('fcompany').value.trim();
+  const message=document.getElementById('fmessage').value.trim();
+  if(!name||!email||!message){alert('Please fill in your name, email and message.');return;}
+  const btn=document.getElementById('formSubmit');btn.textContent='Sending...';btn.disabled=true;
+  const subject=encodeURIComponent(`AIXtreme Enquiry: ${name}${company?' ('+company+')':''}`);
+  const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nCompany: ${company||'N/A'}\n\nMessage:\n${message}`);
+  const a=document.createElement('a');a.href=`mailto:AIXtreme.in@gmail.com?subject=${subject}&body=${body}`;a.click();
+  setTimeout(()=>{document.getElementById('contactForm').style.display='none';document.getElementById('formSuccess').style.display='block';},600);
+}
+</script>
+</body>
+</html>
